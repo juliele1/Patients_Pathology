@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 st.set_page_config(
     page_title="Preparation for the dataset",
     page_icon="🧠",
+    layout="wide",
 )
 
 st.title('Preparation for the dataset of patients pathology')
@@ -111,8 +112,6 @@ info_df = pd.DataFrame({
 })
 
 st.dataframe(info_df, width=600)
-
-
 
 st.write(data.head())
 st.write(data.tail())
