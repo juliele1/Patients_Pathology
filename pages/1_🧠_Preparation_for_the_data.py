@@ -1,9 +1,8 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import missingno as msno
-import seaborn as sns
 import matplotlib.pyplot as plt
+import time
 
 st.set_page_config(
     page_title="Preparation for the dataset",
@@ -12,6 +11,28 @@ st.set_page_config(
 )
 
 st.title('Preparation for the dataset of patients pathology')
+
+with st.status("Downloading data...", expanded=True) as status:
+    st.write("Searching for data...")
+    time.sleep(2)
+    st.write("Found URL.")
+    time.sleep(1)
+    st.write("Downloading data...")
+    time.sleep(1)
+    status.update(label="Download complete!", state="complete", expanded=False)
+
+st.button('Rerun')
+
+with st.status("Downloading data...", expanded=True) as status:
+    st.write("Searching for data...")
+    time.sleep(2)
+    st.write("Found URL.")
+    time.sleep(1)
+    st.write("Downloading data...")
+    time.sleep(1)
+    status.update(label="Download complete!", state="complete", expanded=False)
+
+st.button('Rerun')
 
 @st.cache_data
 def load_data(nrows):
@@ -35,13 +56,10 @@ fig1 = plt.figure(figsize=(8, 6))
 msno.bar(data)
 st.pyplot(fig1)
 
-
 st.write("Percentage of missing values ​​per column:")
 missing_percentage = data.isnull().mean() * 100
 
-
 missing_percentage_df = pd.DataFrame({'Colomns': missing_percentage.index, 'Percentage of missing values ​​per column': missing_percentage.values})
-
 
 st.dataframe(missing_percentage_df, width=500)
 
@@ -54,7 +72,6 @@ data = data.dropna(subset=["patho_niv1"])
 data = data.dropna(subset=["ntop"])
 
 data = data.dropna(subset=["prev"])
-
 
 st.write("Missing bar chart")
 
