@@ -6,16 +6,41 @@ import plotly.express as px
 import altair as alt
 from bokeh.transform import linear_cmap
 from bokeh.models import HoverTool
+from PIL import Image
+from streamlit_extras.colored_header import colored_header
+import webbrowser
+from PIL import Image
+import pandas as pd
 
-st.set_page_config(
-    page_title="Plotting",
-    page_icon="📊",
-    layout="wide",
+
+colored_header(
+    label="Plotting",
+    color_name="violet-70",
+    description="",
 )
 
-data = pd.read_csv("DATA.csv",sep=",")
+github_link = "https://github.com/juliele1"
+logo_path = 'github.jpeg'
+logo = Image.open(logo_path)
 
-selected_chart = st.selectbox("Select a graph", ["Patho_niv1", "Patho_niv2", "Patho_niv3"])
+st.sidebar.image(logo, width=100)
+if st.sidebar.button("Visit my GitHub"):
+    webbrowser.open_new_tab(github_link)
+
+linkedin_link = "https://www.linkedin.com/in/julie-chen-/"
+logo_path = 'linkd.png'
+logo = Image.open(logo_path)
+
+st.sidebar.image(logo, width=70)
+if st.sidebar.button("Visit my LinkedIn"):
+    webbrowser.open_new_tab(linkedin_link)
+
+st.sidebar.write("#datavz2023efrei")
+
+data = pd.read_csv("DATA.csv", sep=",")
+
+selected_chart = st.selectbox(
+    "Select a graph", ["Patho_niv1", "Patho_niv2", "Patho_niv3"])
 
 if selected_chart == "Patho_niv1":
     st.title("Number of occurrences of each disease in patho_niv1")
@@ -23,7 +48,8 @@ if selected_chart == "Patho_niv1":
     patho_niv1_counts = data["patho_niv1"].value_counts().reset_index()
     patho_niv1_counts.columns = ["Disease", "Number of occurrences"]
 
-    patho_niv1_counts = patho_niv1_counts.sort_values(by="Number of occurrences", ascending=False)
+    patho_niv1_counts = patho_niv1_counts.sort_values(
+        by="Number of occurrences", ascending=False)
 
     source = ColumnDataSource(patho_niv1_counts)
 
@@ -34,10 +60,13 @@ if selected_chart == "Patho_niv1":
         ]
     )
 
-    color_mapper = linear_cmap(field_name='Number of occurrences', palette="Viridis256", low=patho_niv1_counts["Number of occurrences"].min(), high=patho_niv1_counts["Number of occurrences"].max())
+    color_mapper = linear_cmap(field_name='Number of occurrences', palette="Viridis256",
+                               low=patho_niv1_counts["Number of occurrences"].min(), high=patho_niv1_counts["Number of occurrences"].max())
 
-    p = figure(y_range=patho_niv1_counts["Disease"], plot_width=800, plot_height=600, title="Number of occurrences of each disease in patho_niv1")
-    p.hbar(y="Disease", right="Number of occurrences", source=source, height=0.5, color=color_mapper)
+    p = figure(y_range=patho_niv1_counts["Disease"], plot_width=800,
+               plot_height=600, title="Number of occurrences of each disease in patho_niv1")
+    p.hbar(y="Disease", right="Number of occurrences",
+           source=source, height=0.5, color=color_mapper)
     p.add_tools(hover)
 
     st.bokeh_chart(p)
@@ -50,11 +79,12 @@ if selected_chart == "Patho_niv2":
     patho_niv1_counts = data["patho_niv2"].value_counts().reset_index()
     patho_niv1_counts.columns = ["Disease", "Number of occurrences"]
 
-    patho_niv1_counts = patho_niv1_counts.sort_values(by="Number of occurrences", ascending=False)
+    patho_niv1_counts = patho_niv1_counts.sort_values(
+        by="Number of occurrences", ascending=False)
 
-    fig = px.bar(patho_niv1_counts, x="Number of occurrences", y="Disease", orientation='h', 
-                title="Number of occurrences of each disease in patho_niv2",
-                labels={"Number of occurrences": "Number of occurrences", "Disease": "Disease"})
+    fig = px.bar(patho_niv1_counts, x="Number of occurrences", y="Disease", orientation='h',
+                 title="Number of occurrences of each disease in patho_niv2",
+                 labels={"Number of occurrences": "Number of occurrences", "Disease": "Disease"})
 
     fig.update_traces(marker_color="rgba(184, 15, 194, 0.8)")
 
@@ -68,12 +98,14 @@ if selected_chart == "Patho_niv3":
     patho_niv1_counts = data["patho_niv3"].value_counts().reset_index()
     patho_niv1_counts.columns = ["Disease", "Number of occurrences"]
 
-    patho_niv1_counts = patho_niv1_counts.sort_values(by="Number of occurrences", ascending=False)
+    patho_niv1_counts = patho_niv1_counts.sort_values(
+        by="Number of occurrences", ascending=False)
 
     bars = alt.Chart(patho_niv1_counts).mark_bar().encode(
         y=alt.Y('Disease:N', sort='-x', axis=alt.Axis(labelLimit=0)),
         x=alt.X('Number of occurrences:Q'),
-        color=alt.Color('Disease:N', scale=alt.Scale(scheme='plasma'), legend=None),
+        color=alt.Color('Disease:N', scale=alt.Scale(
+            scheme='plasma'), legend=None),
         tooltip=['Disease', 'Number of occurrences']
     ).interactive()
 

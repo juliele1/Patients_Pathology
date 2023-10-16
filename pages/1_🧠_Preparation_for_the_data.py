@@ -3,6 +3,9 @@ import pandas as pd
 import missingno as msno
 import matplotlib.pyplot as plt
 import time
+from streamlit_extras.colored_header import colored_header
+import webbrowser
+from PIL import Image
 
 st.set_page_config(
     page_title="Preparation for the dataset",
@@ -10,7 +13,29 @@ st.set_page_config(
     layout="wide",
 )
 
-st.title('Preparation for the dataset of patients pathology')
+colored_header(
+    label="Preparation for the dataset of patients pathology",
+    color_name="violet-70",
+    description="",
+)
+
+github_link = "https://github.com/juliele1"
+logo_path = 'github.jpeg'
+logo = Image.open(logo_path)
+
+st.sidebar.image(logo, width=100)
+if st.sidebar.button("Visit my GitHub"):
+    webbrowser.open_new_tab(github_link)
+
+linkedin_link = "https://www.linkedin.com/in/julie-chen-/"
+logo_path = 'linkd.png'
+logo = Image.open(logo_path)
+
+st.sidebar.image(logo, width=70)
+if st.sidebar.button("Visit my LinkedIn"):
+    webbrowser.open_new_tab(linkedin_link)
+
+st.sidebar.write("#datavz2023efrei")
 
 with st.status("Downloading data...", expanded=True) as status:
     st.write("Searching for data...")
@@ -25,11 +50,13 @@ st.button('Rerun')
 
 st.balloons()
 
+
 @st.cache_data
 def load_data(nrows):
-    data = pd.read_csv("effectifs.csv",sep=";")
+    data = pd.read_csv("effectifs.csv", sep=";")
     data = data[data['annee'] == year_to_filter]
     return data
+
 
 year_to_filter = 2021
 
@@ -50,7 +77,8 @@ st.pyplot(fig1)
 st.write("Percentage of missing values ​​per column:")
 missing_percentage = data.isnull().mean() * 100
 
-missing_percentage_df = pd.DataFrame({'Colomns': missing_percentage.index, 'Percentage of missing values ​​per column': missing_percentage.values})
+missing_percentage_df = pd.DataFrame(
+    {'Colomns': missing_percentage.index, 'Percentage of missing values ​​per column': missing_percentage.values})
 
 st.dataframe(missing_percentage_df, width=500)
 
@@ -72,7 +100,8 @@ st.pyplot(fig2)
 
 st.write("Percentage of missing values ​​per column:")
 missing_percentage = data.isnull().mean() * 100
-missing_percentage_df = pd.DataFrame({'Colomns': missing_percentage.index, 'Percentage of missing values ​​per column': missing_percentage.values})
+missing_percentage_df = pd.DataFrame(
+    {'Colomns': missing_percentage.index, 'Percentage of missing values ​​per column': missing_percentage.values})
 st.dataframe(missing_percentage_df, width=500)
 
 st.write("There is a possibility that the disease doesn't have a sub-category disease, we will fullfil the remainded missing values with Pas de pathologie.")
@@ -88,7 +117,8 @@ st.pyplot(fig3)
 
 st.write("Percentage of missing values ​​per column:")
 missing_percentage = data.isnull().mean() * 100
-missing_percentage_df = pd.DataFrame({'Colomns': missing_percentage.index, 'Percentage of missing values ​​per column': missing_percentage.values})
+missing_percentage_df = pd.DataFrame(
+    {'Colomns': missing_percentage.index, 'Percentage of missing values ​​per column': missing_percentage.values})
 st.dataframe(missing_percentage_df, width=500)
 
 st.write("Information on the dataframe :")
@@ -124,3 +154,4 @@ st.dataframe(info_df, width=600)
 st.write(data.head())
 st.write(data.tail())
 st.write(data)
+data.to_csv("DATA.csv", index=False)
