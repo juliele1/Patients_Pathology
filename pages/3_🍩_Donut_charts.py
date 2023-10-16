@@ -6,7 +6,6 @@ from pyecharts.charts import Pie
 from PIL import Image
 from streamlit_extras.colored_header import colored_header
 import webbrowser
-from PIL import Image
 
 st.set_page_config(
     page_title="Distribution",

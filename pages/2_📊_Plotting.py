@@ -6,12 +6,9 @@ import plotly.express as px
 import altair as alt
 from bokeh.transform import linear_cmap
 from bokeh.models import HoverTool
-from PIL import Image
 from streamlit_extras.colored_header import colored_header
 import webbrowser
 from PIL import Image
-import pandas as pd
-
 
 colored_header(
     label="Plotting",
