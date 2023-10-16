@@ -23,6 +23,8 @@ with st.status("Downloading data...", expanded=True) as status:
 
 st.button('Rerun')
 
+st.balloons()
+
 @st.cache_data
 def load_data(nrows):
     data = pd.read_csv("effectifs.csv",sep=";")

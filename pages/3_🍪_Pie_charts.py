@@ -35,7 +35,7 @@ if selected_chart == "Age group":
 
     st_pyecharts(pie, height='500px')
 
-    st.write("We can think that we have a homogeneous distribution of patients by age group but the distribution is mostly between different old age groups. Indeed, there is 55,61% of old people, 19.74% of middle age people, 7.74% of young adults and 10.55% of children and teeanagers. We can deduct that most people coming to the hospital are old people.")
+    st.write("We can think that we have a homogeneous distribution of patients by age group but the distribution is mostly between different old age groups. Indeed, there is 55,61% of old people, 19.74% of middle age people, 7.74% of young adults and 10.55% of children and teeanagers. We can deduct that most people coming to health care are old people.")
 
 if selected_chart == "Sexe":
     st.title("Distribution by sexe")
@@ -69,7 +69,7 @@ if selected_chart == "Priority level":
 
     st_pyecharts(pie, height='500px')
 
-    st.write("We can see that most patients have a high priority level, mostly 2 and 3, 3 being the highiest value. Indeed, 73.1% of patients have 2-3 priority level compared to 16.6% of patients that have 1 priority level. It means that patients come to the hospital essentially when they are in a critical state.")
+    st.write("We can see that most patients have a high priority level, mostly 2 and 3, 3 being the highiest value. Indeed, 73.1% of patients have 2-3 priority level compared to 16.6% of patients that have 1 priority level. It means that patients see a doctor essentially when they are in a critical state.")
 
 
 
