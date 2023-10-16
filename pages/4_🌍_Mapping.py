@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import pydeck as pdk
 from PIL import Image
-from streamlit_extras.app_logo import add_logo
 from streamlit_extras.colored_header import colored_header
 import webbrowser
 
